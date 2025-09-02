@@ -14,8 +14,9 @@
       "resource": {
         "type": "gs",
         "js": [
-          "https://raw.githubusercontent.com/<seu-usuario>/<seu-repo>/main/index.html"
+          "https://raw.githubusercontent.com/gustavoslemos/looker-creative-grid/main/index.html"
         ]
+  
       },
       "requiredFields": {
         "dimensions": [
