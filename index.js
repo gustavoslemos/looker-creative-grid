@@ -7,7 +7,7 @@
   function render(table) {
     const rows = (table && table.rows) ? table.rows : [];
     const cards = rows.map(r => {
-      // mapeia colunas: [imageUrl, adId, impressions, linkClicks]
+      // Ordem esperada: [imageUrl, adId, impressions, linkClicks]
       const img = r[0]?.formattedValue || r[0]?.rawValue || '';
       const ad  = r[1]?.formattedValue || r[1]?.rawValue || '';
       const imp = r[2]?.formattedValue || r[2]?.rawValue || 0;
@@ -32,14 +32,14 @@
       </div>`;
   }
 
-  // API do Community Viz
+  // Inscreve na API do Community Viz
   if (window.dscc && dscc.subscribeToData) {
     dscc.subscribeToData(
       msg => render((msg && msg.tables && msg.tables.DEFAULT) || { rows: [] }),
       { transform: dscc.tables.DEFAULT }
     );
   } else {
-    // Fallback simples (dev/local) – evita erro se dscc não estiver pronto
+    // Fallback (não deve ser necessário no Looker)
     window.addEventListener('message', e => {
       const t = e.data && e.data.tables && e.data.tables.DEFAULT;
       if (t) render(t);
