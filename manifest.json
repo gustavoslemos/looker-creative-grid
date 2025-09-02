@@ -13,9 +13,10 @@
       "iconUrl": "https://www.gstatic.com/analytics-suite/header/suite/v2/ic_data_studio.svg",
       "resource": {
         "type": "gs",
-        "js": [
-          "https://raw.githubusercontent.com/gustavoslemos/looker-creative-grid/main/index.html"
-        ]
+      "js": [
+        "https://raw.githubusercontent.com/gustavoslemos/looker-creative-grid/main/index.html"
+      ]
+
   
       },
       "requiredFields": {
