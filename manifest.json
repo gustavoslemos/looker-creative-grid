@@ -3,7 +3,6 @@
   "organization": "Gustavo",
   "description": "Grid de criativos com métricas",
   "logoUrl": "https://www.gstatic.com/analytics-suite/header/suite/v2/ic_data_studio.svg",
-  "organizationUrl": "https://github.com/<seu-usuario>",
   "devMode": true,
   "components": [
     {
@@ -12,21 +11,19 @@
       "description": "Grid de cards com thumbnail + métricas",
       "iconUrl": "https://www.gstatic.com/analytics-suite/header/suite/v2/ic_data_studio.svg",
       "resource": {
-        "type": "gs",
-      "js": [
-        "https://raw.githubusercontent.com/gustavoslemos/looker-creative-grid/main/index.html"
-      ]
-
-  
+        "type": "url",
+        "js": [
+          "https://raw.githubusercontent.com/gustavoslemos/looker-creative-grid/main/index.js?v=1"
+        ]
       },
       "requiredFields": {
         "dimensions": [
-          {"id": "imageUrl", "name": "Thumbnail URL"},
-          {"id": "adId", "name": "Ad ID"}
+          { "id": "imageUrl", "name": "Thumbnail URL" },
+          { "id": "adId", "name": "Ad ID" }
         ],
         "metrics": [
-          {"id": "impressions", "name": "Impressions"},
-          {"id": "linkClicks", "name": "Link Clicks"}
+          { "id": "impressions", "name": "Impressions" },
+          { "id": "linkClicks", "name": "Link Clicks" }
         ]
       }
     }
