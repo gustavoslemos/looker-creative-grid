@@ -1,23 +1,29 @@
 /* global dscc */
 (function () {
+  // cria um contêiner raiz 1x
   const root = document.createElement('div');
   root.style.fontFamily = 'Inter,system-ui,Arial,sans-serif';
   document.body.appendChild(root);
 
-  function render(table) {
-    const rows = (table && table.rows) ? table.rows : [];
-    const cards = rows.map(r => {
-      // Ordem esperada: [imageUrl, adId, impressions, linkClicks]
-      const img = r[0]?.formattedValue || r[0]?.rawValue || '';
-      const ad  = r[1]?.formattedValue || r[1]?.rawValue || '';
-      const imp = r[2]?.formattedValue || r[2]?.rawValue || 0;
-      const clk = r[3]?.formattedValue || r[3]?.rawValue || 0;
+  function drawViz(vizData) {
+    // Limpa a tela a cada atualização
+    root.innerHTML = '';
+
+    // Tabela no formato objectTransform
+    const rows = vizData?.tables?.DEFAULT || [];
+
+    // Cada linha: [imageUrl, adId, impressions, linkClicks]
+    const cardsHtml = rows.map(r => {
+      const img = r['imageUrl']?.formattedValue ?? r['imageUrl']?.rawValue ?? '';
+      const ad  = r['adId']?.formattedValue    ?? r['adId']?.rawValue    ?? '';
+      const imp = r['impressions']?.formattedValue ?? r['impressions']?.rawValue ?? 0;
+      const clk = r['linkClicks']?.formattedValue  ?? r['linkClicks']?.rawValue  ?? 0;
 
       return `
-        <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center;">
+        <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center;">
           <div style="width:100%;height:160px;border-radius:8px;border:1px solid #E5E7EB;
                       background-image:url('${img}');
-                      background-size:cover;background-position:center;"></div>
+                      background-size:cover;background-position:center;background-repeat:no-repeat;"></div>
           <div style="width:100%;text-align:left;display:flex;flex-direction:column;gap:4px;">
             <div style="font-weight:600;font-size:14px;">Ad ID: ${ad}</div>
             <div style="font-size:13px;">Impressões: ${imp}</div>
@@ -26,23 +32,12 @@
         </div>`;
     }).join('');
 
-    root.innerHTML = `
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;">
-        ${cards}
-      </div>`;
+    const grid = document.createElement('div');
+    grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;';
+    grid.innerHTML = cardsHtml;
+    root.appendChild(grid);
   }
 
-  // Inscreve na API do Community Viz
-  if (window.dscc && dscc.subscribeToData) {
-    dscc.subscribeToData(
-      msg => render((msg && msg.tables && msg.tables.DEFAULT) || { rows: [] }),
-      { transform: dscc.tables.DEFAULT }
-    );
-  } else {
-    // Fallback (não deve ser necessário no Looker)
-    window.addEventListener('message', e => {
-      const t = e.data && e.data.tables && e.data.tables.DEFAULT;
-      if (t) render(t);
-    });
-  }
+  // Assina dados, estilos e resize
+  dscc.subscribeToData(drawViz, { transform: dscc.objectTransform });
 })();
