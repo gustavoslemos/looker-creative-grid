@@ -1,0 +1,32 @@
+{
+  "name": "Creative Grid",
+  "organization": "Gustavo",
+  "description": "Grid de criativos com métricas",
+  "logoUrl": "https://www.gstatic.com/analytics-suite/header/suite/v2/ic_data_studio.svg",
+  "organizationUrl": "https://github.com/<seu-usuario>",
+  "devMode": true,
+  "components": [
+    {
+      "id": "creative_grid",
+      "name": "Creative Grid",
+      "description": "Grid de cards com thumbnail + métricas",
+      "iconUrl": "https://www.gstatic.com/analytics-suite/header/suite/v2/ic_data_studio.svg",
+      "resource": {
+        "type": "gs",
+        "js": [
+          "https://raw.githubusercontent.com/<seu-usuario>/<seu-repo>/main/index.html"
+        ]
+      },
+      "requiredFields": {
+        "dimensions": [
+          {"id": "imageUrl", "name": "Thumbnail URL"},
+          {"id": "adId", "name": "Ad ID"}
+        ],
+        "metrics": [
+          {"id": "impressions", "name": "Impressions"},
+          {"id": "linkClicks", "name": "Link Clicks"}
+        ]
+      }
+    }
+  ]
+}

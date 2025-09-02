@@ -1,0 +1,44 @@
+<!doctype html>
+<meta charset="utf-8">
+<div id="root" style="font-family:Inter,system-ui,Arial,sans-serif;"></div>
+<script>
+  // API mínima para Community Viz (modo “devMode”)
+  let latest = null;
+
+  function render(table) {
+    const rows = table?.rows || [];
+    const root = document.getElementById('root');
+    const cards = rows.map(r => {
+      const img = r[0]?.formattedValue || r[0]?.rawValue || '';
+      const ad  = r[1]?.formattedValue || r[1]?.rawValue || '';
+      const imp = r[2]?.formattedValue || r[2]?.rawValue || 0;
+      const clk = r[3]?.formattedValue || r[3]?.rawValue || 0;
+
+      return `
+        <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center;">
+          <div style="width:100%;height:160px;border-radius:8px;border:1px solid #E5E7EB;
+                      background-image:url('${img}');
+                      background-size:cover;background-position:center;"></div>
+          <div style="width:100%;text-align:left;display:flex;flex-direction:column;gap:4px;">
+            <div style="font-weight:600;font-size:14px;">Ad ID: ${ad}</div>
+            <div style="font-size:13px;">Impressões: ${imp}</div>
+            <div style="font-size:13px;">Cliques: ${clk}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+    root.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;">
+        ${cards}
+      </div>`;
+  }
+
+  // “Protocolo” simples: o Looker envia window.dscc.onMessage com os dados
+  window.addEventListener('message', (e) => {
+    const msg = e.data;
+    if (!msg || !msg.tables) return;
+    // Espera tabela DEFAULT com linhas: [imageUrl, adId, impressions, linkClicks]
+    latest = msg.tables.DEFAULT;
+    render(latest);
+  });
+</script>
