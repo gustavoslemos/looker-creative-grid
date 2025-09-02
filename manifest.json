@@ -10,7 +10,7 @@
       "name": "Creative Grid",
       "description": "Grid de cards com thumbnail + métricas",
       "iconUrl": "https://www.gstatic.com/analytics-suite/header/suite/v2/ic_data_studio.svg",
-      "resource": {
+      "resources": {
         "type": "url",
         "js": [
           "https://raw.githubusercontent.com/gustavoslemos/looker-creative-grid/main/index.js?v=1"
