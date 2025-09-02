@@ -13,7 +13,7 @@
       "resources": {
         "type": "url",
         "js": [
-          "https://raw.githubusercontent.com/gustavoslemos/looker-creative-grid/main/index.js?v=1"
+          "https://storage.googleapis.com/SEU_BUCKET/creative-grid/index.js?v=1"
         ]
       },
       "requiredFields": {
